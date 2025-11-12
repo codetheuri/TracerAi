@@ -43,8 +43,8 @@ The backend uses a multi-stage pipeline, separating "fast" collection from "slow
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/codetheuri/TracerAI.git](https://github.com/codetheuri/TracerAI.git)
-    cd TracerAI-Backend
+    git clone https://github.com/codetheuri/TracerAI.git
+    cd TracerAI
     ```
 
 2.  **Create and activate a virtual environment:**

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Smart-Trace Dashboard</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: #f7f9fc;
+            color: #333;
+            margin: 0;
+            padding: 24px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+            overflow: hidden; 
+        }
+        .header {
+            padding: 24px 30px;
+            border-bottom: 1px solid #eef2f5;
+        }
+        h1 {
+            color: #1a1a1a;
+            margin: 0;
+        }
+        .header p {
+            margin: 5px 0 0;
+            color: #777;
+        }
+        
+      
+        table {
+            width: 100%;
+            border-collapse: collapse; 
+        }
+        
+        th, td {
+            padding: 16px 30px;
+            text-align: left;
+            border-bottom: 1px solid #eef2f5;
+        }
+        
+        thead th {
+            background-color: #f7f9fc;
+            color: #555;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Make the table rows striped for readability */
+        tbody tr:nth-child(even) {
+            background-color: #fcfdfe;
+        }
+
+        .event-flow, .event-geo {
+            font-family: "Courier New", Courier, monospace;
+            font-size: 1.05em;
+        }
+
+        .event-alert { color: #d9534f; font-weight: bold; }
+        .event-ok { color: #5cb85c; font-weight: bold; }
+
+        .direction-inbound { color: #007bff; }
+        .direction-outbound { color: #ff6a00; }
+        .direction-local { color: #555; }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Smart-Trace AI Dashboard</h1>
+            <p>Showing the 50 most recent raw flow events. (Refresh to update)</p>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Status</th>
+                    <th>Timestamp</th>
+                    <th>Direction</th>
+                    <th>Flow</th>
+                    <th>Geography</th>
+                    <th>Protocol</th>
+                    <th>Metrics (Packets / Bytes)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                    <tr>
+                        <td>
+                            {% if event.prediction == -1 %}
+                                <span class="event-alert">🚨 ALERT</span>
+                            {% else %}
+                                <span class="event-ok">OK</span>
+                            {% endif %}
+                        </td>
+                        
+                        <td>{{ event.timestamp.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        
+                        <td>
+                            <strong class="direction-{{ event.direction | lower }}">
+                                {{ event.direction | title }}
+                            </strong>
+                        </td>
+                        
+                        <td class="event-flow">{{ event.src_ip }}:{{ event.src_port }} -> {{ event.dst_ip }}:{{ event.dst_port }}</td>
+                        
+                        <td class="event-geo">{{ event.geo_src }} -> {{ event.geo_dst }}</td>
+                        
+                        <td>{{ event.protocol }}</td>
+
+                        <td>{{ event.packet_count }} pkts / {{ event.byte_count }} bytes</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

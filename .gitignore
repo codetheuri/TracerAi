@@ -1,0 +1,25 @@
+# Python virtual environment
+venv/
+.venv/
+
+# Database file
+*.db
+*.db-journal
+
+# GeoIP database
+GeoLite2-Country.mmdb
+
+# AI models & Scalers
+*.pkl
+
+# Python cache
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# OS files
+.DS_Store
+
+# IDE files
+.vscode/
+.idea/

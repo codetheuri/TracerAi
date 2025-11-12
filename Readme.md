@@ -95,5 +95,5 @@ You must run these steps in order.
 * You can view the live data stream on the dashboard at `http://127.0.0.1:8000/`.
 * To trigger an analysis of the latest data, send a POST request:
     ```bash
-    curl -X POST [http://127.0.0.1:8000/run-analysis](http://127.0.0.1:8000/run-analysis)
+    curl -X POST http://127.0.0.1:8000/run-analysis
     ```
